@@ -3,7 +3,6 @@ import { mkdir } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 
-const DEFAULT_URLS = ["https://www.apple.com/"];
 const VIEWPORT = { width: 1440, height: 900 };
 const OUTPUT_DIR = "screenshots";
 
@@ -41,8 +40,14 @@ const errorMessage = (error: unknown) =>
   error instanceof Error ? error.message : String(error);
 
 const run = async () => {
-  const inputUrls = process.argv.slice(2);
-  const urls = inputUrls.length > 0 ? inputUrls : DEFAULT_URLS;
+  const urls = process.argv.slice(2);
+  if (urls.length === 0) {
+    console.error(
+      "Usage: npm run capture -- <url> [additional urls]\nExample: npm run capture -- https://www.apple.com/"
+    );
+    process.exitCode = 1;
+    return;
+  }
   const timestamp = formatTimestamp(new Date());
   const headlessEnv = process.env.HEADLESS;
   const headless = headlessEnv ? headlessEnv.toLowerCase() !== "false" : true;
