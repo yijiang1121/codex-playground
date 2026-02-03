@@ -1,0 +1,13 @@
+{
+  "name": "codex-playground",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "capture": "tsx scripts/capture.ts"
+  },
+  "devDependencies": {
+    "playwright": "^1.44.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.5.4"
+  }
+}
